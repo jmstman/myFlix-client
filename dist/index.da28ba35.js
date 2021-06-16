@@ -25788,7 +25788,7 @@ function RegistrationView(props) {
     const [birthday, setBirthday] = _react.useState('');
     const handleSubmit = (e)=>{
         e.preventDefault();
-        console.log(username, password, email, birthdate);
+        console.log(username, password, email, birthday);
         props.onRegister(username);
     };
     return(/*#__PURE__*/ _reactDefault.default.createElement("form", {
@@ -36790,8 +36790,7 @@ MovieCard.propTypes = {
             Birth: _propTypesDefault.default.string.isRequired
         }),
         ImagePath: _propTypesDefault.default.string.isRequired,
-        Featured: _propTypesDefault.default.bool.isRequired,
-        Year: _propTypesDefault.default.string.isRequired
+        Featured: _propTypesDefault.default.bool.isRequired
     }).isRequired,
     onMovieClick: _propTypesDefault.default.func.isRequired
 };
