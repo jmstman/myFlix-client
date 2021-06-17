@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import './registration-view.scss';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Navbar } from 'react-bootstrap'
-import Col from 'react-bootstrap/Col';
-import axios from 'axios';
+
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -20,29 +18,33 @@ export function RegistrationView(props) {
   }
 
   return (
-    <form className="reg-form">
-      <label className="reginput">
-        Username:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label className="reginput">
-        Password:
-      <input type="text" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <label className="reginput">
-        Email:
-      <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-      </label>
-      <label className="reginput">
-        Birthday:
-      <input type="text" value={birthday} onChange={e => setBirthday(e.target.value)} />
-      </label>
-      <span>
-        <button type='button' onClick={handleSubmit}>Submit</button>
-        <button onClick={() => { onBackClick(null); }}>Back</button>
-      </span>
-    </form>
-  )
+    <Form>
+      <Form.Group controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
+      </Form.Group>
+
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
+      </Form.Group>
+
+      <Form.Group controlId="formEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control type="text" onChange={e => setEmail(e.target.value)} />
+      </Form.Group>
+
+      <Form.Group controlId="formBirthday">
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control type="text" onChange={e => setBirthday(e.target.value)} />
+      </Form.Group>
+
+      <Button variant="primary mr-1" type="submit" onClick={handleSubmit}>
+        Submit
+      </Button>
+      <Button variant="outline-primary" onClick={props.toggleRegister}>Back</Button>
+    </Form>
+  );
 }
 
 RegistrationView.propTypes = {
