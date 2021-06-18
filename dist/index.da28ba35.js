@@ -23941,7 +23941,7 @@ $RefreshReg$(_c1, "Button");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","prop-types":"4dfy5","axios":"7rA65"}],"6A5ko":[function(require,module,exports) {
+},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","prop-types":"4dfy5","axios":"7rA65","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"6A5ko":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
@@ -26299,105 +26299,105 @@ class MovieView extends _reactDefault.default.Component {
             className: "movie-view",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 15
+                lineNumber: 14
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "movie-poster cent",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 16
+                lineNumber: 15
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("img", {
             src: movie.ImagePath,
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 17
+                lineNumber: 16
             },
             __self: this
         })), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "movie-title cent my-4",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 19
+                lineNumber: 18
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label font-weight-bold",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 20
+                lineNumber: 19
             },
             __self: this
         }, "Title: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 21
+                lineNumber: 20
             },
             __self: this
         }, movie.Title)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "my-3",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 23
+                lineNumber: 22
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label font-weight-bold",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 24
+                lineNumber: 23
             },
             __self: this
         }, "Genre: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 25
+                lineNumber: 24
             },
             __self: this
         }, movie.Genre.Name)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "my-3",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 27
+                lineNumber: 26
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label font-weight-bold",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 28
+                lineNumber: 27
             },
             __self: this
         }, "Director: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 29
+                lineNumber: 28
             },
             __self: this
         }, movie.Director.Name)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
             className: "my-3",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 31
+                lineNumber: 30
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "label font-weight-bold",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 32
+                lineNumber: 31
             },
             __self: this
         }, "Description: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
             className: "value",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 33
+                lineNumber: 32
             },
             __self: this
         }, movie.Description)), /*#__PURE__*/ _reactDefault.default.createElement("button", {
@@ -26406,7 +26406,7 @@ class MovieView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
-                lineNumber: 35
+                lineNumber: 34
             },
             __self: this
         }, "Back")));
@@ -26428,7 +26428,7 @@ MovieView.propTypes = {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","./movie-view.scss":"5azHA"}],"5azHA":[function() {},{}],"3Mt3t":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","./movie-view.scss":"5azHA","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"5azHA":[function() {},{}],"3Mt3t":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
