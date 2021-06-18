@@ -1,16 +1,49 @@
-.login-form {
-  display: inline-flex;
-  position: absolute;
-  flex-direction: column;
-  align-items: left;
+Form {
+  max-width: 400px;
+  min-width: 270px;
+  width: 95vw;
+  padding: 0 2%;
 }
 
-.loginput {
-  padding: 5px;
-  width: 200px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  margin: 2px;
+.err {
+  color: red;
+  font-size: 0.85em;
+  height: 40px;
+  text-align: center;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  min-width: 260px;
+  font-weight: 700;
+  font-size: 3em;
+  margin-bottom: 1em;
+  color: #17a2b8;
+  text-align: center;
+}
+
+@media all and (max-width: 400px) {
+  .title {
+    font-size: 2.3em;
+  }
+}
+@media all and (max-width: 320px) {
+  .title {
+    font-size: 2em;
+  }
+}
+@media all and (max-width: 320px) {
+  Form {
+    padding: 0;
+    border: none;
+  }
 }
 .reg-form {
   display: flex;
@@ -25,6 +58,28 @@
   border-radius: 10px;
   box-sizing: border-box;
   margin: 2px;
+}
+.movie-view {
+  font-size: 1.1em;
+}
+
+.cent {
+  text-align: center;
+}
+
+.poster {
+  width: 250px;
+}
+
+@media all and (max-width: 360px) {
+  .movie-view {
+    font-size: 0.9em;
+  }
+
+  .movie-name {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
 }
 .my-flix {
   color: steelblue;
