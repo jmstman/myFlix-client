@@ -9,6 +9,7 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+//import { Navigation } from '../nav/nav';
 
 export class MainView extends React.Component {
 
@@ -39,10 +40,15 @@ export class MainView extends React.Component {
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      user
+      user: authData.user.Username
     });
+  
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
 
   onRegister(register) {
@@ -62,6 +68,21 @@ export class MainView extends React.Component {
     this.setState({
       register: !this.state.register
     })
+  }
+
+  getMovies(token) {
+    axios.get('https://paradiseflix.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      // Assign the result to the state
+      this.setState({
+        movies: response.data
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
