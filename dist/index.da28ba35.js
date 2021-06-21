@@ -23813,8 +23813,6 @@ parcelHelpers.defineInteropFlag(exports);
 //import './login-view.scss';
 parcelHelpers.export(exports, "LoginView", ()=>LoginView
 );
-parcelHelpers.export(exports, "Button", ()=>Button
-);
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _form = require("react-bootstrap/Form");
@@ -23913,17 +23911,9 @@ function LoginView(props) {
 }
 _s(LoginView, "9FY2cPL9VBDmuhjwpF2ik6flsHs=");
 _c = LoginView;
-function Button({ label  }) {
-    return(/*#__PURE__*/ _reactDefault.default.createElement("button", {
-        className: "login-button",
-        __source: {
-            fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\login-view\\login-view.jsx",
-            lineNumber: 50
-        },
-        __self: this
-    }, label));
-}
-_c1 = _buttonDefault.default;
+//export function Button({ label }) {
+//return <button className="login-button">{label}</button>;
+//}
 LoginView.propTypes = {
     user: _propTypesDefault.default.shape({
         username: _propTypesDefault.default.string.isRequired,
@@ -23932,9 +23922,8 @@ LoginView.propTypes = {
     onLoggedIn: _propTypesDefault.default.func.isRequired,
     onRegister: _propTypesDefault.default.func
 };
-var _c, _c1;
+var _c;
 $RefreshReg$(_c, "LoginView");
-$RefreshReg$(_c1, "Button");
 
   helpers.postlude(module);
 } finally {
