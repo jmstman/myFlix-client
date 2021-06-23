@@ -1,14 +1,16 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
 
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-import { LoginView } from '../login-view/login-view';
-import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 //import { Navigation } from '../nav/nav';
 
 export class MainView extends React.Component {
@@ -22,16 +24,14 @@ export class MainView extends React.Component {
     };
   }
 
-  componentDidMount(){
-    axios.get('https://paradiseflix.herokuapp.com/movies')
-    .then(response => {
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
       this.setState({
-        movies: response.data
+        user: localStorage.getItem('user')
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      this.getMovies(accessToken);
+    }
   }
 
   setSelectedMovie(movie) {
@@ -70,6 +70,14 @@ export class MainView extends React.Component {
     })
   }
 
+  onLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null
+    });
+  }
+
   getMovies(token) {
     axios.get('https://paradiseflix.herokuapp.com/movies', {
       headers: { Authorization: `Bearer ${token}`}
@@ -94,6 +102,8 @@ export class MainView extends React.Component {
       return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} toggleRegister={this.toggleRegister} />;
 
     if (movies.length === 0) return <div className="main-view" />;
+
+    <button onClick={() => { this.onLoggedOut() }}>Logout</button>;
 
     return (
       <Row className="main-view justify-content-md-center">
