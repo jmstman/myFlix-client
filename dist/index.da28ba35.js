@@ -21869,24 +21869,40 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+//import { BrowserRouter as Router, Route } from "react-router-dom";
 var _row = require("react-bootstrap/Row");
 var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _loginView = require("../login-view/login-view");
-var _registrationView = require("../registration-view/registration-view");
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
+var _loginView = require("../login-view/login-view");
+var _registrationView = require("../registration-view/registration-view");
 class MainView extends _reactDefault.default.Component {
     constructor(){
         super();
         this.state = {
             movies: [],
             selectedMovie: null,
-            user: null
+            user: null,
+            isLoaded: false
         };
+    }
+    getMovies(token) {
+        _axiosDefault.default.get('https://paradiseflix.herokuapp.com/movies', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            // Assign the result to the state
+            this.setState({
+                movies: response.data
+            });
+        }).catch(function(error) {
+            console.log(error);
+        });
     }
     componentDidMount() {
         let accessToken = localStorage.getItem('token');
@@ -21911,22 +21927,6 @@ class MainView extends _reactDefault.default.Component {
         localStorage.setItem('user', authData.user.Username);
         this.getMovies(authData.token);
     }
-    onRegister(register) {
-        this.setState({
-            register
-        });
-    }
-    onBackClick() {
-        this.setState({
-            selectedMovie: null
-        });
-    }
-    toggleRegister = (e)=>{
-        e.preventDefault();
-        this.setState({
-            register: !this.state.register
-        });
-    };
     onLoggedOut() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -21934,104 +21934,175 @@ class MainView extends _reactDefault.default.Component {
             user: null
         });
     }
-    getMovies(token) {
-        _axiosDefault.default.get('https://paradiseflix.herokuapp.com/movies', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            // Assign the result to the state
+    loading() {
+        setTimeout(()=>{
             this.setState({
-                movies: response.data
+                isLoaded: true
             });
-        }).catch(function(error) {
-            console.log(error);
-        });
+        }, 1400);
     }
     render() {
-        const { movies , selectedMovie , register  } = this.state;
-        if (register) return(/*#__PURE__*/ _reactDefault.default.createElement(_registrationView.RegistrationView, {
-            onRegister: (register1)=>this.onRegister(register1)
-            ,
-            toggleRegister: this.toggleRegister,
+        const { movies , user , loading  } = this.state;
+        if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 97
+                lineNumber: 91
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+            __source: {
+                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 92
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+            onLoggedIn: (user1)=>this.onLoggedIn(user1)
+            ,
+            __source: {
+                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 93
+            },
+            __self: this
+        }))));
+        if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "main-view",
+            __source: {
+                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 96
             },
             __self: this
         }));
-        if (this.state.user === null) return(/*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
-            onLoggedIn: (user)=>this.onLoggedIn(user)
-            ,
-            toggleRegister: this.toggleRegister,
+        return(/*#__PURE__*/ _reactDefault.default.createElement(Router, {
+            __source: {
+                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 99
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
+            className: "main-view justify-content-center",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
                 lineNumber: 100
             },
             __self: this
-        }));
-        if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-            className: "main-view",
+        }, /*#__PURE__*/ _reactDefault.default.createElement(Route, {
+            exact: true,
+            path: [
+                "/",
+                "/movies"
+            ],
+            render: ({ history  })=>{
+                if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 12
+                }, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+                    loggingIn: (user1)=>this.onLoggedIn(user1)
+                })));
+                if (movies.length === 0 || !isLoaded) return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement(Navigation, {
+                    user: user,
+                    history: history,
+                    onLoggedOut: (signState)=>{
+                        this.onLoggedOut(signState);
+                    }
+                }), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "loading"
+                }, "Loading", /*#__PURE__*/ _reactDefault.default.createElement("span", {
+                    className: "spinner"
+                })), this.loading()));
+                if (userData) return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement(Navigation, {
+                    user: user,
+                    history: history,
+                    onLoggedOut: (signState)=>{
+                        this.onLoggedOut(signState);
+                    }
+                }), movies.map((movie)=>/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                        xs: 12,
+                        sm: 6,
+                        md: 4,
+                        lg: 4,
+                        key: movie._id
+                    }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
+                        movie: movie,
+                        userData: userData,
+                        user: user,
+                        token: token,
+                        onGetAcc: ()=>{
+                            this.getAcc(token, user);
+                        },
+                        onSignOut: (sgnState)=>{
+                            this.signOut(signState);
+                        }
+                    }))
+                )));
+            },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 102
+                lineNumber: 101
             },
             __self: this
-        }));
-        /*#__PURE__*/ _reactDefault.default.createElement("button", {
-            onClick: ()=>{
-                this.onLoggedOut();
+        }), /*#__PURE__*/ _reactDefault.default.createElement(Route, {
+            path: "/register",
+            render: ()=>{
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_registrationView.RegistrationView, null)));
             },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 104
+                lineNumber: 128
             },
             __self: this
-        }, "Logout");
-        return(/*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
-            className: "main-view justify-content-md-center",
-            __source: {
-                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 107
-            },
-            __self: this
-        }, selectedMovie ? /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
-            md: 8,
-            __source: {
-                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 110
-            },
-            __self: this
-        }, /*#__PURE__*/ _reactDefault.default.createElement(_movieView.MovieView, {
-            movie: selectedMovie,
-            onBackClick: (newSelectedMovie)=>{
-                this.setSelectedMovie(newSelectedMovie);
+        }), /*#__PURE__*/ _reactDefault.default.createElement(Route, {
+            path: "/movies/:movieId",
+            render: ({ match , history  })=>{
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 8
+                }, /*#__PURE__*/ _reactDefault.default.createElement(_movieView.MovieView, {
+                    movie: movies.find((m)=>m._id === match.params.movieId
+                    ),
+                    onBackClick: ()=>history.goBack()
+                })));
             },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 111
+                lineNumber: 134
             },
             __self: this
-        })) : movies.map((movie)=>/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
-                md: 3,
-                __source: {
-                    fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                    lineNumber: 115
-                },
-                __self: this
-            }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
-                key: movie._id,
-                movie: movie,
-                onMovieClick: (newSelectedMovie)=>{
-                    this.setSelectedMovie(newSelectedMovie);
-                },
-                __source: {
-                    fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                    lineNumber: 116
-                },
-                __self: this
-            }))
-        )));
+        }), /*#__PURE__*/ _reactDefault.default.createElement(Route, {
+            path: "/directors/:name",
+            render: ({ match  })=>{
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 8
+                }, /*#__PURE__*/ _reactDefault.default.createElement(DirectorView, {
+                    director: movies.find((m)=>m.Director.Name === match.params.name
+                    ).Director
+                })));
+            },
+            __source: {
+                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 140
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(Route, {
+            path: "/directors/:name",
+            render: ({ match , history  })=>{
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 8
+                }, /*#__PURE__*/ _reactDefault.default.createElement(GenreView, {
+                    genre: movies.find((m)=>m.Genre.Name === match.params.name
+                    ).Genre,
+                    onBackClick: ()=>history.goBack()
+                })));
+            },
+            __source: {
+                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
+                lineNumber: 148
+            },
+            __self: this
+        }))));
     }
 }
 exports.default = MainView;
