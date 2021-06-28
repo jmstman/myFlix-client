@@ -21927,24 +21927,18 @@ class MainView extends _reactDefault.default.Component {
             user: null
         });
     }
-    onRegister(register) {
-        console.log(register);
-        this.setState({
-            register
-        });
-    }
     render() {
         const { movies , user  } = this.state;
         if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 80
+                lineNumber: 73
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 81
+                lineNumber: 74
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
@@ -21952,7 +21946,7 @@ class MainView extends _reactDefault.default.Component {
             ,
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 82
+                lineNumber: 75
             },
             __self: this
         }))));
@@ -21960,21 +21954,21 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 85
+                lineNumber: 78
             },
             __self: this
         }));
         return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 88
+                lineNumber: 81
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 89
+                lineNumber: 82
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
@@ -21991,63 +21985,22 @@ class MainView extends _reactDefault.default.Component {
             },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 90
-            },
-            __self: this
-        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
-            exact: true,
-            path: "/",
-            render: ()=>{
-                if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
-                    onLoggedIn: (user1)=>this.onLoggedIn(user1)
-                })));
-                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-                    className: "main-view"
-                }));
-                return movies.map((m)=>/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
-                        md: 3,
-                        key: m._id
-                    }, /*#__PURE__*/ _reactDefault.default.createElement(_movieCard.MovieCard, {
-                        movie: m
-                    }))
-                );
-            },
-            __source: {
-                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 98
-            },
-            __self: this
-        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
-            path: "/register",
-            render: ()=>{
-                if (user) return(/*#__PURE__*/ _reactDefault.default.createElement(Redirect, {
-                    to: "/"
-                }));
-                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_registrationView.RegistrationView, null)));
-            },
-            __source: {
-                fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 110
+                lineNumber: 83
             },
             __self: this
         }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
             path: "/movies/:movieId",
-            render: ({ match , history  })=>{
-                if (!user) return;
-                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
-                    className: "main-view"
-                }));
+            render: ({ match  })=>{
                 return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
                     md: 8
                 }, /*#__PURE__*/ _reactDefault.default.createElement(_movieView.MovieView, {
                     movie: movies.find((m)=>m._id === match.params.movieId
-                    ),
-                    onBackClick: ()=>history.goBack()
+                    )
                 })));
             },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\main-view\\main-view.jsx",
-                lineNumber: 117
+                lineNumber: 90
             },
             __self: this
         }))));
@@ -28724,11 +28677,9 @@ parcelHelpers.export(exports, "RegistrationView", ()=>RegistrationView
 );
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-//import './registration-view.scss';
+var _registrationViewScss = require("./registration-view.scss");
 var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
 var _button = require("react-bootstrap/Button");
@@ -28737,216 +28688,135 @@ var _s = $RefreshSig$();
 function RegistrationView(props) {
     _s();
     const [username, setUsername] = _react.useState('');
-    const [email, setEmail] = _react.useState('');
     const [password, setPassword] = _react.useState('');
+    const [email, setEmail] = _react.useState('');
     const [birthday, setBirthday] = _react.useState('');
     const handleSubmit = (e)=>{
         e.preventDefault();
-        let setisValid = formValidation();
-        if (setisValid) {
-            _axiosDefault.default.post('https://paradiseflix.herokuapp.com/users', {
-                Username: username,
-                Password: password,
-                Email: email,
-                Birthday: birthday
-            }).then((response)=>{
-                const data = response.data;
-                console.log(data);
-                window.open('/', '_self');
-                alert("You have sucessfully registered.");
-            }).catch((error)=>{
-                if (error.response && error.response.status === 400) alert('The value you entered is not valid.');
-            });
-            console.log(username, password, email, birthday);
-            props.onRegister(username, password, email, birthday);
-        }
-    };
-    const formValidation = ()=>{
-        const usernameError = {
-        };
-        const emailError = {
-        };
-        const passwordError = {
-        };
-        const birthdayError = {
-        };
-        let isValid = true;
-        if (username.trim().length < 5) {
-            usernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
-            isValid = false;
-        } else if (password.trim().length < 4) {
-            passwordError.passwordMissing = "You must enter a password.(minimum 4 characters) ";
-            isValid = false;
-        } else if (!email.includes(".") || !email.includes("@")) {
-            emailError.emailNotEmail = "A valid email address is required.";
-            isValid = false;
-        } else if (birthday === '') {
-            birthdayError.noBirthday = "Please enter your birthday";
-            isValid = false;
-        }
-        return isValid;
+        console.log(username, password, email, birthday);
+        props.onRegister(username);
     };
     return(/*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default, {
-        className: "RegForm",
-        onSubmit: handleSubmit,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 68
+            lineNumber: 21
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
-        controlId: "formGroupUsername",
+        controlId: "formUsername",
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 69
+            lineNumber: 22
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 70
+            lineNumber: 23
         },
         __self: this
-    }, "Username"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+    }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
         type: "text",
-        placeholder: "Enter username",
-        value: username,
         onChange: (e)=>setUsername(e.target.value)
         ,
-        required: true,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 71
+            lineNumber: 24
         },
         __self: this
-    }), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control.Feedback, {
-        type: "invalid",
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
+        controlId: "formPassword",
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 72
-        },
-        __self: this
-    }, "Please provide a valid username.")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
-        controlId: "formGroupPassword",
-        __source: {
-            fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 74
+            lineNumber: 27
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 75
+            lineNumber: 28
         },
         __self: this
-    }, "Password"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+    }, "Password:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
         type: "password",
-        placeholder: "Password",
-        value: password,
         onChange: (e)=>setPassword(e.target.value)
         ,
-        required: true,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 76
+            lineNumber: 29
         },
         __self: this
-    }), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control.Feedback, {
-        type: "invalid",
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
+        controlId: "formEmail",
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 77
-        },
-        __self: this
-    }, "Please provide a valid password.")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
-        controlId: "formGroupEmail",
-        __source: {
-            fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 79
+            lineNumber: 32
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 80
+            lineNumber: 33
         },
         __self: this
-    }, "Email"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
-        type: "email",
-        placeholder: "Email",
-        value: email,
+    }, "Email:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+        type: "text",
         onChange: (e)=>setEmail(e.target.value)
         ,
-        required: true,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 81
+            lineNumber: 34
         },
         __self: this
-    }), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control.Feedback, {
-        type: "invalid",
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
+        controlId: "formBirthday",
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 82
-        },
-        __self: this
-    }, "Please provide a valid email.")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
-        controlId: "formGroupBirthday",
-        __source: {
-            fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 84
+            lineNumber: 37
         },
         __self: this
     }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 85
+            lineNumber: 38
         },
         __self: this
-    }, "Birthday"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
-        type: "date",
-        placeholder: "00-00-0000",
-        value: birthday,
+    }, "Birthday:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+        type: "text",
         onChange: (e)=>setBirthday(e.target.value)
         ,
-        required: true,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 86
+            lineNumber: 39
         },
         __self: this
-    })), /*#__PURE__*/ _reactDefault.default.createElement("span", {
-        __source: {
-            fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 88
-        },
-        __self: this
-    }, /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+        variant: "primary mr-1",
         type: "submit",
+        onClick: handleSubmit,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 89
+            lineNumber: 42
         },
         __self: this
-    }, "Submit"), ' ', /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
-        variant: "secondary",
-        onClick: history.goBack,
+    }, "Submit"), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+        variant: "outline-primary",
+        onClick: props.toggleRegister,
         __source: {
             fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 91
+            lineNumber: 45
         },
         __self: this
-    }, "Back"))));
+    }, "Back")));
 }
-_s(RegistrationView, "A+wm70X2adbECkG8uWgV9DNI2j8=");
+_s(RegistrationView, "tdA1KK8yaZidqYo0wscqshHt/KE=");
 _c = RegistrationView;
 RegistrationView.propTypes = {
-    register: _propTypesDefault.default.shape({
-        Username: _propTypesDefault.default.string.isRequired,
-        Password: _propTypesDefault.default.string.isRequired,
-        Email: _propTypesDefault.default.string.isRequired,
-        Birthday: _propTypesDefault.default.string.isRequired
-    })
+    user: _propTypesDefault.default.shape({
+        username: _propTypesDefault.default.string.isRequired,
+        password: _propTypesDefault.default.string.isRequired
+    }),
+    onRegisterIn: _propTypesDefault.default.func.isRequired
 };
 var _c;
 $RefreshReg$(_c, "RegistrationView");
@@ -28956,7 +28826,7 @@ $RefreshReg$(_c, "RegistrationView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"3b2NM","axios":"7rA65","prop-types":"4dfy5","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J"}],"3fzwD":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","@parcel/transformer-js/src/esmodule-helpers.js":"Qgnc0","../../../../../../../AppData/Roaming/npm/node_modules/parcel/node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"3TT6J","./registration-view.scss":"SnqcA"}],"SnqcA":[function() {},{}],"3fzwD":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 exports.__esModule = true;
