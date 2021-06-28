@@ -1,0 +1,26 @@
+.movie-view {
+  font-size: 1.1em;
+}
+
+.cent {
+  text-align: center;
+}
+
+.poster {
+  width: 260px;
+}
+
+@media all and (max-width: 360px) {
+  .movie-view {
+    font-size: 0.9em;
+  }
+
+  .movie-name {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+}
+.my-flix {
+  color: steelblue;
+}
+/*# sourceMappingURL=index.8e7d5574.css.map */

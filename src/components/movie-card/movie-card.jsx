@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 export class MovieCard extends React.Component {
@@ -39,6 +39,6 @@ MovieCard.propTypes = {
     }),
     ImagePath: PropTypes.string.isRequired,
     Featured: PropTypes.bool.isRequired,
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired
+    Year: PropTypes.string.isRequired
+  }).isRequired
 };
