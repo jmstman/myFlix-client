@@ -18,6 +18,8 @@ import Button from 'react-bootstrap/Button';
 import { Container, Navbar } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
+import './main-view.scss';
+
 export class MainView extends React.Component {
 
   constructor(){
@@ -71,8 +73,6 @@ export class MainView extends React.Component {
       });
   }
 
-  
-
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -93,6 +93,13 @@ export class MainView extends React.Component {
     });
   }
 
+  onRegister(register) {
+    console.log(register);
+    this.setState({
+      register,
+    });
+  }
+
   render() {
     const { movies, user, history } = this.state;
 
@@ -108,7 +115,7 @@ export class MainView extends React.Component {
       <Row className="main-view justify-content-md-center">
       <Container>
             <Navbar bg="dark" variant="dark" fixed="top">
-              <Navbar.Brand>Welcome to MyFlix!</Navbar.Brand>
+              <Navbar.Brand>Welcome to Paradise Flix!</Navbar.Brand>
               <ul>
                 <Link to={`/`}>
                   <Button variant="link" className="navbar-link text-light">Movies</Button>
@@ -124,7 +131,7 @@ export class MainView extends React.Component {
               </ul >
             </Navbar >
           </Container>
-          
+
         <Route exact path="/" render={() => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
@@ -136,10 +143,10 @@ export class MainView extends React.Component {
               </Col>
             ))
           }} />
+
           <Route path="/register" render={() => {
-            if (user) return <Redirect to="/" />
             return <Col>
-              <RegistrationView />
+              <RegistrationView/>
             </Col>
           }} />
 
