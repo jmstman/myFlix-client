@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-//import Card from 'react-bootstrap/Card';
+
+import axios from 'axios';
+import { Link } from "react-router-dom";
 import "./movie-view.scss"
 
 
@@ -21,22 +23,29 @@ export class MovieView extends React.Component {
         </div>
         <div className="my-3">
           <span className="label font-weight-bold">Genre: </span>
-          <span className="value">{movie.Genre.Name}</span>
+          <span className="value">{movie.Genre.Name}
+          <Link className="link" to={`/genre/${movie.Genre.Name}`}>
+            <Button variant="link">Show more</Button>
+          </Link>
+          </span>
         </div>
         <div className="my-3">
           <span className="label font-weight-bold">Director: </span>
-          <span className="value">{movie.Director.Name}</span>
+          <span className="value">{movie.Director.Name}
+          <Link className="link" to={`/directors/${movie.Director.Name}`}>
+              <Button variant="link">Show more</Button>
+            </Link>
+          </span>
         </div>
         <div className="my-3">
           <span className="label font-weight-bold">Description: </span>
           <span className="value">{movie.Description}</span>
         </div>
         <button onClick={() => { onBackClick(null); }}>Back</button>
-
-      </div>
+        </div>
     );
   }
-}
+};
 
 MovieView.propTypes={
   movie:PropTypes.shape({
