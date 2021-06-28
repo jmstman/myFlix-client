@@ -9,6 +9,7 @@ import { LoginView } from '../login-view/login-view';
 import { DirectorView } from '../director-view/director-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
 //import { Navigation } from '../nav/nav';
 
 import Row from 'react-bootstrap/Row';
@@ -105,7 +106,25 @@ export class MainView extends React.Component {
     return (
       <Router>
       <Row className="main-view justify-content-md-center">
-        
+      <Container>
+            <Navbar bg="dark" variant="dark" fixed="top">
+              <Navbar.Brand>Welcome to MyFlix!</Navbar.Brand>
+              <ul>
+                <Link to={`/`}>
+                  <Button variant="link" className="navbar-link text-light">Movies</Button>
+                </Link >
+                <Link to={`/users/${user}`}>
+                  <Button variant="link" className="navbar-link text-light">Profile</Button>
+                </Link>
+                <Link to={`/`}>
+                  <Button variant="link" className="navbar-link text-light"
+                    onClick={() => this.onLoggedOut()}
+                  >Logout</Button>
+                </Link >
+              </ul >
+            </Navbar >
+          </Container>
+          
         <Route exact path="/" render={() => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
