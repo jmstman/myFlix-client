@@ -19,8 +19,10 @@ export class GenreView extends React.Component {
         <span className="label font-weight-bold">Description: </span>
         <span className="value">{genre.Description}</span>
       </div>
-      <div class="d-flex justify-content-center">
+      <div className="d-flex justify-content-center">
+      <div className="my-2">
           <Button variant="info" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
+        </div>
         </div>
         </div>
         </div>
