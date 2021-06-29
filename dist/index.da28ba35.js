@@ -27506,14 +27506,14 @@ class MovieView extends _reactDefault.default.Component {
             },
             __self: this
         }, movie.Year)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            class: "container my-4",
+            className: "container my-4",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
                 lineNumber: 58
             },
             __self: this
         }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
-            class: "text-center",
+            className: "text-center",
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
                 lineNumber: 59

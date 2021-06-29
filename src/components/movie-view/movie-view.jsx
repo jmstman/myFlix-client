@@ -55,8 +55,8 @@ export class MovieView extends React.Component {
             <span className="label font-weight-bold">Released: </span>
             <span className="value">{movie.Year}</span>
           </div>
-          <div class= "container my-4">
-          <div class="text-center">
+          <div className= "container my-4">
+          <div className="text-center">
           <Button variant="secondary" size="sm" onClick={()=>onBackClick()}>Back</Button>
 
           <Link to={`/directors/${movie.Director.Name}`}>
