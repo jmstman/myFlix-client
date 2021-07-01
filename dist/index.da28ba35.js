@@ -29195,15 +29195,7 @@ function RegistrationView(props) {
             lineNumber: 87
         },
         __self: this
-    }, "Submit"), ' ', /*#__PURE__*/ _reactDefault.default.createElement(_.Button, {
-        variant: "secondary",
-        onClick: history.goBack,
-        __source: {
-            fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\registration-view\\registration-view.jsx",
-            lineNumber: 89
-        },
-        __self: this
-    }, "Back"))));
+    }, "Submit"))));
 }
 _s(RegistrationView, "A+wm70X2adbECkG8uWgV9DNI2j8=");
 _c = RegistrationView;
