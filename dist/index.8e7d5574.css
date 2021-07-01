@@ -1,0 +1,49 @@
+.movie-view {
+  font-size: 1.1em;
+}
+
+.cent {
+  text-align: center;
+}
+
+.poster {
+  width: 260px;
+}
+
+@media all and (max-width: 360px) {
+  .movie-view {
+    font-size: 0.9em;
+  }
+
+  .movie-name {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+}
+.reg-form {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: left;
+}
+
+.reginput {
+  padding: 5px;
+  width: 200px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin: 2px;
+}
+body {
+  padding-top: 80px;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 0px;
+  }
+}
+.my-flix {
+  color: steelblue;
+}
+/*# sourceMappingURL=index.8e7d5574.css.map */

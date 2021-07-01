@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { Link } from "react-router-dom";
+
+//import './login-view.scss';
 
 export function LoginView(props) {
   const [ username, setUsername ] = useState('');
@@ -9,10 +13,18 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
     /* Send a request to the server for authentication */
-    /* then call props.onLoggedIn(username) */
-    props.onLoggedIn(username);
+    axios.post('https://paradiseflix.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    })
+    .then(response => {
+      const data = response.data;
+      props.onLoggedIn(data);
+    })
+    .catch(e => {
+      console.log('no such user')
+    });
   };
 
   return (
@@ -21,7 +33,7 @@ export function LoginView(props) {
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
       </Form.Group>
-
+  
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
@@ -32,17 +44,17 @@ export function LoginView(props) {
       <Button variant="outline-primary" onClick={props.toggleRegister}>Register</Button>
     </Form>
   );
-}
+  }
+  
 
-export function Button({ label }) {
-  return <button className="login-button">{label}</button>;
-}
+//export function Button({ label }) {
+  //return <button className="login-button">{label}</button>;
+//}
 
 LoginView.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
   }),
-  onLoggedIn: PropTypes.func.isRequired,
-  onRegister: PropTypes.func,
+  onLoggedIn: PropTypes.func.isRequired
 };
