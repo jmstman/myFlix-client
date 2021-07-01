@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import './registration-view.scss';
-import { Form, Button, Col, Alert } from 'react-bootstrap/';
+import { Form, Button } from 'react-bootstrap/';
 
 
 export function RegistrationView(props) {
@@ -85,8 +85,6 @@ export function RegistrationView(props) {
       </Form.Group>
       <span>
         <Button type="submit">Submit</Button>
-        {' '}
-        <Button variant="secondary" onClick={history.goBack}>Back</Button>
       </span>
     </Form >
   )
@@ -100,4 +98,6 @@ RegistrationView.propTypes = {
     Birthday: PropTypes.string.isRequired
   }),
 };
+
+
 
