@@ -68,8 +68,8 @@ export class MovieView extends React.Component {
           </Link>
         </div>
         </div>
-        <div class= "container">
-          <div class="col text-center">
+        <div className= "container">
+          <div className="col text-center">
           <Link to={`/movies/${movie._id}`}>
             <Button d-grid gap-2 col-6 mx-auto variant="primary mr-3" onClick={() => this.handleAdd(movie)}>Add to favorites</Button>
           </Link>
