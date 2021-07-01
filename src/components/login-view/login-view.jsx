@@ -41,7 +41,9 @@ export function LoginView(props) {
       <Button variant="primary mr-1" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
+      <Link to="/register">
       <Button variant="outline-primary" onClick={props.toggleRegister}>Register</Button>
+      </Link>
     </Form>
   );
   }
