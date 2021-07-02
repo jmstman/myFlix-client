@@ -157,25 +157,8 @@ export class ProfileView extends React.Component {
         <Container>
           <Row className="justify-content-md-center">
             <Col md={12}>
-              <Jumbotron fluid className="ProfileView">
-                <div className="profile-view">
-                  <div className="profile-name">
-                    <span className="label">Username: </span>
-                    <span className="value">{user.Username}</span>
-                  </div>
-                  <div className="profile-email">
-                    <span className="label">Email: </span>
-                    <span className="value">{user.Email}</span>
-                  </div>
-                  <div className="profile-birthday">
-                    <span className="label">Birthday: </span>
-                    <span className="value">{user.Birthday}</span>
-                  </div>
-                </div>
-              </Jumbotron>
-
               <Form className="justify-content-md-center mb-30">
-                <h1 style={{ textAlign: "center" }}>Update Profile Details</h1>
+                <h1 style={{ textAlign: "center" }}>Profile Details</h1>
 
                 <Form.Group controlId="formUsername">
                   <Form.Label>Username: </Form.Label>
@@ -286,7 +269,7 @@ export class ProfileView extends React.Component {
                   textAlign: "center",
                 }}
               >
-                <Card.Text className="mt-200" as='h3'>Favorites:</Card.Text>
+                <Card.Text className="mt-200" as='h3'>Your Favorite Movies:</Card.Text>
                 <Row className='mb-20'>
                   {FavoriteMovieList.map((movie) => {
                     return (
@@ -298,9 +281,11 @@ export class ProfileView extends React.Component {
                               <Link to={`/movies/${movie._id}`}>
                                 <Card.Title as='h6'>{movie.Title}</Card.Title>
                               </Link>
-                              <Button className='mb-30' onClick={() => this.removeFavorite(movie)}>Remove</Button>
                             </Card.Body>
                           </Card>
+                          <Button className='mb-30' onClick={() => this.removeFavorite(movie)}>
+                            Remove
+                      </Button>
                         </div>
                       </Col>
                     );
