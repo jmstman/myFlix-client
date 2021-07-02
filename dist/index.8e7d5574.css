@@ -43,6 +43,13 @@ body {
     padding-top: 0px;
   }
 }
+#page-content {
+  flex: 1 0 auto;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
 .my-flix {
   color: steelblue;
 }
