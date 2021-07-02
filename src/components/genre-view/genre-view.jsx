@@ -2,6 +2,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import { Card } from 'react-bootstrap';
 
 export class GenreView extends React.Component {
 
@@ -9,23 +10,17 @@ export class GenreView extends React.Component {
     const { genre, onBackClick } = this.props; 
 
     return (
-      <div className="genre-view cent my-4">
-      <div className="my-2">
-        <span className="label font-weight-bold">Genre: </span>
-        <span className="value">{genre.Name}</span>
+      <div className="genre-view">
+        <Card border="info" bg="dark" text="white" className="genre-card">
+
+          <Card.Body>
+            <Card.Title><span className='text-primary'>Name: </span> {genre.Name}</Card.Title>
+            <Card.Text><span className='text-primary'>Bio: </span>{genre.Description}</Card.Text>
+            <Button block onClick={() => { onBackClick(); }}>Back</Button>
+          </Card.Body>
+        </Card>
+
       </div>
-          <div className="genre-description">
-          <div className="my-2">
-        <span className="label font-weight-bold">Description: </span>
-        <span className="value">{genre.Description}</span>
-      </div>
-      <div className="d-flex justify-content-center">
-      <div className="my-2">
-          <Button variant="info" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
-        </div>
-        </div>
-        </div>
-        </div>
     );
   }
 }
