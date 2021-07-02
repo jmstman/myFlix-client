@@ -118,11 +118,21 @@ export class MainView extends React.Component {
               <Navbar.Brand>Welcome to Paradise Flix!</Navbar.Brand>
               <ul>
                 <Link to={`/`}>
+                  <Button variant="link" className="navbar-link text-light">
+                      Login
+                  </Button>
+                  </Link>
+                <Link to={`/`}>
                   <Button variant="link" className="navbar-link text-light">Movies</Button>
                 </Link >
                 <Link to={`/users/${user}`}>
                   <Button variant="link" className="navbar-link text-light">Profile</Button>
                 </Link>
+                <Link to={`/register`}>
+                  <Button variant="link" className="navbar-link text-light">
+                      Register
+                  </Button>
+                  </Link>
                 <Link to={`/`}>
                   <Button variant="link" className="navbar-link text-light"
                     onClick={() => this.onLoggedOut()}
@@ -181,7 +191,7 @@ export class MainView extends React.Component {
             </Col>
           }} />
         </Row>
-      </Router>
+      </Router>      
     );
   }
 }
