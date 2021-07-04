@@ -18,7 +18,7 @@ export class MovieView extends React.Component {
             <Card.Text><span className='text-primary'>Description: </span>{movie.Description}</Card.Text>
             <Card.Text><span className='text-primary'>Genre: </span>{movie.Genre.Name}</Card.Text>
             <Card.Text><span className='text-primary'>Director: </span>{movie.Director.Name}</Card.Text>
-            <Button block onClick={() => { onBackClick(null); }}>Back</Button>
+            <Button block onClick={() => { onBackClick(); }}>Back</Button>
           </Card.Body>
         </Card>
       </div>
@@ -36,7 +36,7 @@ MovieView.propTypes = {
     }),
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
   onBackClick: PropTypes.func.isRequired,
   })
 };

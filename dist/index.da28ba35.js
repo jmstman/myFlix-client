@@ -27581,7 +27581,7 @@ class MovieView extends _reactDefault.default.Component {
         }, "Director: "), movie.Director.Name), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
             block: true,
             onClick: ()=>{
-                onBackClick(null);
+                onBackClick();
             },
             __source: {
                 fileName: "C:\\Users\\tooth\\Documents\\careerfoundry\\movie_api\\myFlix-client\\src\\components\\movie-view\\movie-view.jsx",
@@ -27601,7 +27601,7 @@ MovieView.propTypes = {
         }),
         Director: _propTypesDefault.default.shape({
             Name: _propTypesDefault.default.string.isRequired
-        }).isRequired,
+        }),
         onBackClick: _propTypesDefault.default.func.isRequired
     })
 };
