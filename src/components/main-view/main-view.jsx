@@ -1,7 +1,13 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
@@ -20,13 +26,12 @@ import { Link } from "react-router-dom";
 
 import './main-view.scss';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
 
   constructor(){
     super();
 
-    this.state = {
-      movies: [], 
+    this.state = { 
       user: null
     };
   }
@@ -48,9 +53,7 @@ export class MainView extends React.Component {
     })
     .then(response => {
       // Assign the result to the state
-      this.setState({
-        movies: response.data
-      });
+      this.props.setMovies(response.data);
     })
     .catch(function (error) {
       console.log(error);
@@ -101,14 +104,9 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user, history } = this.state;
-
-    //if (!user) return <Row>
-      //<Col>
-        //<LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-      //</Col>
-    //</Row>
-    ////if (movies.length === 0) return <div className="main-view" />;
+    // movies is extracted from this.props rather than this.state
+    let { movies } = this.props;
+    let { user } = this.state;
 
     return (
       <Router>
@@ -142,16 +140,12 @@ export class MainView extends React.Component {
             </Navbar >
           </Container>
 
-        <Route exact path="/" render={() => {
+          <Route exact path="/" render={() => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
             if (movies.length === 0) return <div className="main-view" />;
-            return movies.map(m => (
-              <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
-              </Col>
-            ))
+            return <MoviesList movies={movies} />;
           }} />
 
           <Route path="/register" render={() => {
@@ -196,4 +190,8 @@ export class MainView extends React.Component {
   }
 }
 
-export default MainView;
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies } )(MainView);

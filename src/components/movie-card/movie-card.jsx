@@ -9,7 +9,7 @@ export class MovieCard extends React.Component {
   handleAdd() {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-    axios.post(`https://paradiseflix.herokuapp.com/users/${user}` + "/movies/" +
+    axios.post(`https://paradiseflix.herokuapp.com/users/${user}` + "/favorites/" +
       this.props.movie._id, {},
       { headers: { Authorization: `Bearer ${token}` } }
     )
