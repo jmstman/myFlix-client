@@ -16,7 +16,7 @@ import { DirectorView } from '../director-view/director-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
-//import { Navigation } from '../nav/nav';
+import { FavoritesView } from '../favorites-view/favorites-view';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
