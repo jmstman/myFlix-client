@@ -1,286 +1,180 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, FormControl } from 'react-bootstrap';
-import axios from "axios";
-import Container from "react-bootstrap/Container";
-import { Button, Form, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/actions';
+import { updateUser } from '../../actions/actions';
+
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Form from 'react-bootstrap/Form';
+
 
 
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Username: "",
-      Password: "",
-      Email: "",
-      Birthday: "",
-      FavoriteMovies: [],
-      UsernameError: "",
-      EmailError: "",
-      PasswordError: "",
-      BirthdayError: "",
+      validated: null
     };
-  }
-  componentDidMount() {
-    let accessToken = localStorage.getItem("token");
-    this.getUsers(accessToken);
+    console.log('Profile View Loaded');
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.deRegister = this.deRegister.bind(this);
   }
 
-  getUsers(token) {
-    axios.get('https://paradiseflix.herokuapp.com/users', {
-      headers: { Authorization: `Bearer ${token}` }
+  handleUpdate(e, newUsername, newPassword, newEmail, newBirthday) {
+    this.setState({
+      validated: null,
+    });
+
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.setState({
+        validated: true,
+      });
+      return;
+    }
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    const url = 'https://paradiseflix.herokuapp.com/users/';
+
+    axios({
+      method: 'put',
+      url: url + user,
+      headers: { Authorization: `Bearer ${token}` },
+      data: {
+        Username: newUsername ? newUsername : this.state.Username,
+        Password: newPassword ? newPassword : this.state.Password,
+        Email: newEmail ? newEmail : this.state.Email,
+        Birthday: newBirthday ? newBirthday : this.state.Birthday,
+      },
     })
       .then(response => {
-        // Assign the result to the state
         this.setState({
-          users: response.data
+          Username: response.data.Username,
+          Password: response.data.Password,
+          Email: response.data.Email,
+          Birthday: response.data.Birthday,
         });
-        console.log(response)
+        alert('Changes have been saved!');
+        localStorage.setItem('user', this.state.Username);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
-  removeFavorite(movie) {
-    const token = localStorage.getItem("token");
-    const url =
-      "https://https://paradiseflix.herokuapp.com/users" +
-      localStorage.getItem("user") +
-      "/movies/" +
-      movie._id;
-    axios
-      .delete(url, {
+  setUsername(input) {
+    this.Username = input;
+  }
+
+  setPassword(input) {
+    this.Password = input;
+  }
+
+  setEmail(input) {
+    this.Email = input;
+  }
+
+  setBirthday(input) {
+    this.Birthday = input;
+  }
+
+  deRegister(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    const url = 'https://paradiseflix.herokuapp.com/users/';
+
+    axios.delete(url + user, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((response) => {
-        console.log(response);
-        this.componentDidMount();
-        // location.reload();
-        alert(movie.Title + " has been removed from your Favorites.");
-      });
-  }
-
-  handleDelete() {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    axios.delete(`https://paradiseflix.herokuapp.com/users/${user}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-      .then(() => {
-        alert(user + " has been deleted.");
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        window.location.pathname = "/";
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-  handleUpdate(e) {
-    let token = localStorage.getItem("token");
-    // console.log({ token });
-    let user = localStorage.getItem("user");
-    console.log(this.state);
-    let setisValid = this.formValidation();
-    if (setisValid) {
-      axios.put(`https://paradiseflix.herokuapp.com/users/${user}`,
-        {
-          Username: this.state.Username,
-          Password: this.state.Password,
-          Email: this.state.Email,
-          Birthday: this.state.Birthday,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-        .then((response) => {
-          const data = response.data;
-          localStorage.setItem("user", data.Username);
-          console.log(data);
-          alert(user + " has been updated.");
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
+      .then( result => {
+        localStorage.clear();
+        setUser({
+          user: null,
+          token: null
         });
-    }
-  }
-
-  formValidation() {
-    let UsernameError = {};
-    let EmailError = {};
-    let PasswordError = {};
-    let BirthdayError = {};
-    let isValid = true;
-    if (this.state.Username.trim().length < 5) {
-      UsernameError.usernameShort = "Must be alphanumeric and contains at least 5 characters";
-      isValid = false;
-    }
-    if (this.state.Password.trim().length < 3) {
-      PasswordError.passwordMissing = "You must enter a current or new password.(minimum 4 characters) ";
-      isValid = false;
-    }
-    if (!(this.state.Email && this.state.Email.includes(".") && this.state.Email.includes("@"))) {
-      EmailError.emailNotEmail = "A valid email address is required.";
-      isValid = false;
-    }
-    if (this.state.birthday === '') {
-      BirthdayError.birthdayEmpty = "Please enter your Birthday.";
-      isValid = false;
-    }
-    this.setState({
-      UsernameError: UsernameError,
-      PasswordError: PasswordError,
-      EmailError: EmailError,
-      BirthdayError: BirthdayError,
-    })
-    return isValid;
-  };
-
-  handleChange(e) {
-    let { name, value } = e.target;
-    // console.log(name, value);
-    this.setState({
-      [name]: value
-    })
+        window.open('/', '_self');
+        alert('Your account has been deleted!');
+      })
+      .catch(() => {
+        console.log('error deleting the user');
+      });
   }
 
   render() {
-    const { user, movies } = this.props;
-    const { UsernameError, EmailError, PasswordError, BirthdayError } = this.state;
-    const FavoriteMovieList = movies.filter((movie) => {
-      return this.state.FavoriteMovies.includes(movie._id);
-    });
-    return (
-      <div className="userProfile" style={{ display: "flex" }}>
-        <Container>
-          <Row className="justify-content-md-center">
-            <Col md={12}>
-              <Jumbotron>
-                <div className="favoriteMovies" style={{ float: "center", textAlign: "center" }}>
-                  <Card.Text className="mt-200" as='h3'>Favorite Movies:</Card.Text>
-                  <Row className='mb-20'>
-                    {FavoriteMovieList.map((movie) => {
-                      return (
-                        <Col md={3} key={movie._id}>
-                          <div key={movie._id}>
-                            <Card className='mb-20'>
-                              <Card.Img variant="top" src={movie.ImagePath} />
-                              <Card.Body>
-                                <Link to={`/movies/${movie._id}`}>
-                                  <Card.Title as='h6'>{movie.Title}</Card.Title>
-                                </Link>
-                                <Button className='mb-30' onClick={() => this.removeFavorite(movie)}>Remove</Button>
-                              </Card.Body>
-                            </Card>
-                          </div>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </div>
-              </Jumbotron>
+    const { validated } = this.state;
+    const { onBackClick } = this.props;
+    // const validated = null
+    // const username = localStorage.getItem('user');
+    
 
-              <Jumbotron className="profile-view">
-                <Form className="justify-content-md-center">
-                  <h1 style={{ textAlign: "center" }}>Update Profile Details</h1>
-                  <Form.Group controlId="formUsername">
-                    <Form.Label>Username: </Form.Label>
-                    <FormControl size="sm"
-                      type="text"
-                      name="Username"
-                      value={this.state.Username}
-                      onChange={(e) => this.handleChange(e)}
-                      placeholder="Change username" />
-                    {Object.keys(UsernameError).map((key) => {
-                      return (
-                        <div key={key} style={{ color: "red" }}>
-                          {UsernameError[key]}
-                        </div>
-                      );
-                    })}
-                  </Form.Group>
-                  <Form.Group controlId="formPassword">
-                    <Form.Label>Password: </Form.Label>
-                    <FormControl size="sm"
-                      type="password"
-                      name="Password"
-                      value={this.state.Password}
-                      onChange={(e) => this.handleChange(e)}
-                      placeholder="Enter current password or Change password" />
-                    {Object.keys(PasswordError).map((key) => {
-                      return (
-                        <div key={key} style={{ color: "red" }}>
-                          {PasswordError[key]}
-                        </div>
-                      );
-                    })}
-                  </Form.Group>
-                  <Form.Group controlId="formEmail">
-                    <Form.Label>Email: </Form.Label>
-                    <FormControl
-                      size="sm"
-                      type="email"
-                      name="Email"
-                      value={this.state.Email}
-                      onChange={(e) => this.handleChange(e)}
-                      placeholder="Change Email" />
-                    {Object.keys(EmailError).map((key) => {
-                      return (
-                        <div key={key} style={{ color: "red" }}>
-                          {EmailError[key]}
-                        </div>
-                      );
-                    })}
-                  </Form.Group>
-                  <Form.Group controlId="formBirthday">
-                    <Form.Label>Date of Birth: </Form.Label>
-                    <FormControl
-                      size="sm"
-                      type="date"
-                      name="Birthday"
-                      value={this.state.Birthday}
-                      onChange={(e) => this.handleChange(e)}
-                      placeholder="Change Birthday" />
-                    {Object.keys(BirthdayError).map((key) => {
-                      return (
-                        <div key={key} style={{ color: "red" }}>
-                          {BirthdayError[key]}
-                        </div>
-                      );
-                    })}
-                  </Form.Group>
-
-                  <Link to={`/users/${this.state.Username}`}>
-                    <Button className="mb-2" variant="success"
-                      type="link"
-                      size="md"
-                      block
-                      onClick={(e) => this.handleUpdate(e)}
-                    >
-                      Save changes
-                    </Button>
-                  </Link>
-                </Form>
-              </Jumbotron>
-              <Jumbotron>
-                <h1 style={{ textAlign: "center" }}>Delete Account</h1>
-                <h3 style={{ textAlign: "center" }}>There is no undoing this action.</h3>
-                <br></br>
-                <Button className="mb-2" variant="danger" size="lg" block onClick={() => this.handleDelete()}> Delete Account
-                </Button>
-              </Jumbotron>
-            </Col>
-          </Row>
-        </Container>
-      </div >
-    );
-  }
+  return (
+    <div>
+      <Card className="my-3">
+        <Card.Body>
+          <Form noValidate validated={validated} className='update-form' onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthday)}>
+            <Row className="justify-content-center">
+              <Col xs={10} md={8} lg={6}>
+                <h5>Update your Profile</h5>
+                <Form.Group controlId="BasicUsername">
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control type="text"
+                  placeholder="Enter current or new Username"
+                  autoComplete="username"
+                  onChange={(e) => this.setUsername(e.target.value )} 
+                  pattern='[a-zA-Z0-9]{5,}'
+                  minLength="5" />
+                  <Form.Control.Feedback type='invalid'>Enter a Username with at least 5 alphanumeric characters</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="BasicPassword">
+                  <Form.Label>Password:*</Form.Label>
+                  <Form.Control type="password"
+                  placeholder="Enter current or new Password"
+                  autoComplete="password"
+                  onChange={(e) => this.setPassword(e.target.value )} minLength="5" required />
+                  <Form.Control.Feedback type='invalid'>Enter a valid password with at least 5 characters</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="BasicEmail">
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control type="email"
+                  placeholder="Change email" 
+                  autoComplete="email"
+                  onChange={(e) => this.setEmail(e.target.value )} />
+                  <Form.Control.Feedback type='invalid'>Please enter a valid email address.</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="BasicBirthday">
+                  <Form.Label>Birthday:</Form.Label>
+                  <Form.Control type="date"
+                  onChange={(e) => this.setBirthday(e.target.value )} />
+                  <Form.Control.Feedback type='invalid'>Please enter a valid date.</Form.Control.Feedback>
+                </Form.Group>
+                <Button variant="secondary" type="submit">Update</Button><hr />
+                <Button variant="secondary" className="my-2" onClick={() => { onBackClick(null); }}>Back</Button>
+                <p className="my-3">Deregister Account: - Cannot be undone!</p>
+                <Button variant="danger"  onClick={(e) => this.deRegister(e)}>Deregister</Button>
+              </Col>
+            </Row>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
+  )}
 }
+
+PropTypes.checkPropTypes(ProfileView.propTypes);
 ProfileView.propTypes = {
-  movies: PropTypes.array.isRequired
-};
+  user: PropTypes.object.isRequired,
+  onBackClick: PropTypes.func.isRequired
+}
 
 let mapStateToProps = state => {
   return {
