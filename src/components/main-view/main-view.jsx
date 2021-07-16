@@ -1,94 +1,94 @@
+//main-view new
+
 import React from 'react';
 import axios from 'axios';
 
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { setMovies } from '../../actions/actions';
+import { setUser } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
-
-import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
-import { DirectorView } from '../director-view/director-view';
-import { RegistrationView } from '../registration-view/registration-view';
+import { MovieView } from '../movie-view/movie-view';
+import { DirectorView } from '../director-view/director-view/';
 import { GenreView } from '../genre-view/genre-view';
+import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
+import { NavView } from '../nav-view/nav-view';
 import { FavoritesView } from '../favorites-view/favorites-view';
+
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { Container, Navbar } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Container } from 'react-bootstrap';
 
-import './main-view.scss';
 
 class MainView extends React.Component {
-
-  constructor(){
-    super();
-
-    this.state = { 
+  constructor (props) {
+    super(props);
+    this.state = {
       user: null
     };
+    console.log('MainView Loaded')
   }
 
-  componentDidMount() {
-    let accessToken = localStorage.getItem('token');
+  componentDidMount () {
+    const accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user')
-      });
+      console.log('componentDidMount MainView');
+      this.getUser(accessToken);
       this.getMovies(accessToken);
-      this.getUsers(accessToken);
     }
   }
 
-  getMovies(token) {
-    axios.get('https://paradiseflix.herokuapp.com/movies', {
-      headers: { Authorization: `Bearer ${token}`}
-    })
-    .then(response => {
-      // Assign the result to the state
-      this.props.setMovies(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
+  onLoggedIn (authData) {
+    this.props.setUser(authData);
+    this.setState({
+      user: authData.user
     });
+    console.log('onLoggedIn reached', authData)
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
 
-  getUsers(token) {
-    axios.get('https://paradiseflix.herokuapp.com/users', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        // Assign the result to the state
+  getUser(token) {
+    const user = localStorage.getItem("user")
+    axios
+      .get('https://paradiseflix.herokuapp.com/users/' + user, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.props.setUser(response.data)
         this.setState({
-          users: response.data
+          user: response.data
         });
-        console.log(response)
+        console.log('getUser response', response.data)
       })
       .catch(function (error) {
         console.log(error);
       });
+      console.log('getUser reached')
   }
 
-  onLoggedIn(authData) {
-    console.log(authData);
-    this.setState({
-      user: authData.user.Username
-    });
-  
-    localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
-    this.getMovies(authData.token);
-    this.getUsers(authData.token);
+
+  getMovies (token) {
+    axios.get('https://paradiseflix.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        this.props.setMovies(response.data);
+        })
+      .catch(function (error) {
+        console.log(error);
+      });
+      console.log('getMovies reached');
   }
 
-  onLoggedOut() {
+  onLoggedOut () {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.setState({
@@ -96,102 +96,140 @@ class MainView extends React.Component {
     });
   }
 
-  onRegister(register) {
-    console.log(register);
-    this.setState({
-      register,
-    });
-  }
-
-  render() {
-    // movies is extracted from this.props rather than this.state
+  render () {
     let { movies } = this.props;
     let { user } = this.state;
+    console.log('MainView Render user', user);
+    console.log('MainView Render movies', movies);
 
     return (
       <Router>
-      <Row className="main-view justify-content-md-center">
-      <Container>
-            <Navbar bg="dark" variant="dark" fixed="top">
-              <Navbar.Brand>Welcome to Paradise Flix!</Navbar.Brand>
-              <ul>
-                <Link to={`/`}>
-                  <Button variant="link" className="navbar-link text-light">
-                      Login
-                  </Button>
-                  </Link>
-                <Link to={`/`}>
-                  <Button variant="link" className="navbar-link text-light">Movies</Button>
-                </Link >
-                <Link to={`/users/${user}`}>
-                  <Button variant="link" className="navbar-link text-light">Profile</Button>
-                </Link>
-                <Link to={`/register`}>
-                  <Button variant="link" className="navbar-link text-light">
-                      Register
-                  </Button>
-                  </Link>
-                <Link to={`/`}>
-                  <Button variant="link" className="navbar-link text-light"
-                    onClick={() => this.onLoggedOut()}
-                  >Logout</Button>
-                </Link >
-              </ul >
-            </Navbar >
-          </Container>
+        <div className="main-view justify-content-center">
 
           <Route exact path="/" render={() => {
-            if (!user) return <Col>
-              <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-            </Col>
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             if (movies.length === 0) return <div className="main-view" />;
-            return <MoviesList movies={movies} />;
+            return (
+            <Container>
+              <Row>
+                <Col className="p-0">
+                  <NavView user={user} />
+                </Col>
+              </Row>
+              <div className="d-flex flex-wrap justify-content-center">
+                  <MoviesList movies={movies} />
+              </div>
+            </Container>
+            );
           }} />
 
-          <Route path="/register" render={() => {
-            return <Col>
-              <RegistrationView/>
-            </Col>
-          }} />
-
-          <Route path="/users/:userId" render={() => {
-            if (!user) return
-            return <Col>
-              <ProfileView onLoggedIn={user => this.onLoggedIn(user)}
-                movies={movies} user={user}
-                onBackClick={() => history.goBack()} />
-            </Col>
+          <Route exact path="/register" render={() => {
+            if (user) return <Redirect to="/" />;
+            return <RegistrationView />
           }} />
 
           <Route path="/movies/:movieId" render={({ match, history }) => {
-            return <Col md={8}>
-              <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
-            </Col>
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+            if (movies.length === 0) return <div className="main-view" />;
+            return (
+              <Container>
+                <Row>
+                  <Col className="p-0">
+                    <NavView user={user} />
+                  </Col>
+                </Row>
+                <Row className="d-flex justify-content-center">
+                  <Col sm={12} md={10} lg={8}>
+                    <MovieView 
+                    movie={movies.find(m => m._id === match.params.movieId)} 
+                    onBackClick={() => history.goBack()} />
+                  </Col>
+                </Row>
+            </Container>
+            );
           }} />
 
-          <Route path="/genres/:name" render={({ match, history }) => {
-            if (!user) return
+          <Route path="/genres/:name" render={ ({ match, history }) => {
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             if (movies.length === 0) return <div className="main-view" />;
-            return <Col md={8}>
-              <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
-            </Col>
+            return (
+              <Container>
+                <Row>
+                  <Col className="p-0">
+                    <NavView user={user} />
+                  </Col>
+                </Row>
+                <Row className="d-flex justify-content-center">
+                  <Col md={10}>
+                    <GenreView 
+                    genre={movies.find(m => m.Genre.Name === match.params.name).Genre}
+                    movies={movies}
+                    onBackClick={() => history.goBack()} />
+                  </Col>
+                </Row>
+            </Container>
+            );
           }} />
 
           <Route path="/directors/:name" render={({ match, history }) => {
-            if (!user) return
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             if (movies.length === 0) return <div className="main-view" />;
-            return <Col md={8}>
-              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
-            </Col>
+            return (
+              <Container>
+                <Row>
+                  <Col className="p-0">
+                    <NavView user={user}  />
+                  </Col>
+                </Row>
+                <Row className="d-flex justify-content-center">
+                  <Col md={10}>
+                    {/* find directors name from the database */}
+                    <DirectorView 
+                    director={movies.find(m => m.Director.Name === match.params.name).Director}
+                    movies={movies}
+                    onBackClick={() => history.goBack()} />
+                  </Col>
+                </Row>  
+              </Container>
+            );
           }} />
-        </Row>
-      </Router>      
-    );
-  }
+        
+          <Route path="/users/:userId" render={({ history }) => {
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+            if (movies.length === 0) return <div className="main-view" />;
+            return ( 
+              <Container>
+                <Row>
+                  <Col className="p-0">
+                    <NavView user={user} />
+                  </Col>
+                </Row>
+                <Row className="d-flex justify-content-center">
+                  <Col md={10}>
+                    <ProfileView 
+                    user={user}
+                    onBackClick={() => history.goBack()} />
+                  </Col>
+                </Row> 
+                <Row className="d-flex justify-content-center">
+                <Col md={10}>
+                  <FavoritesView user={user} movies={movies} />
+                  </Col>  
+                </Row>
+              </Container>
+            );
+          }} />
+        </div>
+      </Router>
+  );
+}
 }
 
 let mapStateToProps = state => {
-  return { movies: state.movies }
+return {
+  user: state.user,
+  movies: state.movies
+}
 }
 
-export default connect(mapStateToProps, { setMovies } )(MainView);
+export default connect(mapStateToProps, { setMovies, setUser } )(MainView);

@@ -44,7 +44,7 @@ export class FavoritesView extends React.Component {
           {FavoriteMovies.length === 0 && <div className='card-content'>You don't have any favorite movies yet!</div>}
           <div className='favorites-container'>
               {FavoriteMovies.length > 0 && movies.map((movie) => {
-                if (movie._id === FavoriteMovies.find((favMovie) => favMovie === movie._id)) {
+                if (movie._id === FavoriteMovies.find((favorite) => favorite === movie._id)) {
                   return (
                     <div key={movie._id}>
                         <Card style={{ width: '15rem', float: 'left' }} className='d-inline-flex align-content-start m-1'>

@@ -1,22 +1,29 @@
-.movie-view {
-  font-size: 1.1em;
-}
-
-.cent {
-  text-align: center;
-}
-
-.poster {
-  width: 260px;
-}
-
-@media all and (max-width: 360px) {
-  .movie-view {
-    font-size: 0.9em;
+@media screen and (max-width: 768px) {
+  .poster {
+    max-width: 80%;
   }
+}
 
-  .movie-name {
-    font-size: 1.3em;
-    font-weight: 600;
+@media screen and (min-width: 768px) {
+  .poster {
+    max-width: 70%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .poster {
+    max-width: 65%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .poster {
+    max-width: 55%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .poster {
+    max-width: 50%;
   }
 }
